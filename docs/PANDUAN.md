@@ -1,0 +1,16 @@
+# Panduan Rheno & Fadla
+
+1. **Masuk** dengan akun Google yang sudah didaftarkan administrator. Jika akses ditolak, keluar dan pilih akun yang benar. Jangan membagikan sesi login atau tautan unduh foto.
+2. **Ruang Kita** menampilkan perjalanan aktif, perjalanan mendatang terdekat, atau cerita terakhir, progres, kenangan terbaru, dan rencana hari ini. Hitung mundur mengikuti tanggal di zona waktu perjalanan.
+3. **Perjalanan → Perjalanan baru** untuk membuat trip. Isi tanggal dan zona waktu IANA (contoh `Asia/Jakarta`). Edit nama/jadwal dari halaman trip. Sampul dapat diganti dengan foto pribadi yang dioptimalkan.
+4. **Tambah tempat**: pilih kategori, tanggal/jam opsional, status, catatan, dan tautan Google Maps. Kosongkan tanggal untuk Wishlist. Jam yang belum pasti tetap ditandai tentatif. Pindah hari lewat Edit tanpa menghapus tempat. Untuk check-in hotel, tambahkan aktivitas kategori Hotel sendiri.
+5. **Urutan manual**: buka ⋯ pada kartu, pilih panah naik/turun. Pilih urutan Waktu untuk melihat jadwal kronologis; kembali ke Manual untuk mengatur panah.
+6. **Tandai dikunjungi** menyimpan checklist terlebih dahulu. Dialog Memory Unlocked menawarkan cerita baru; boleh dilewati. Batalkan centang tanpa menghapus kenangan yang telah dibuat. “Lewati tempat” tetap mempertahankan catatan dan tidak menghitungnya sebagai dikunjungi.
+7. **Kenangan baru** dapat terhubung ke tempat atau menjadi Random moment. Pilih perjalanan melalui filter sebelum membuat kenangan. Simpan judul/cerita, buka kartu album, lalu tambahkan foto satu per satu. Foto asli tetap simpan sendiri. Buka preview untuk melihat dan unduh salinan optimal; edit caption melalui ikon pensil.
+8. **Hapus catatan** memindahkannya ke Sampah. Pulihkan lewat Pengaturan. Menghapus foto album bersifat permanen setelah konfirmasi, jadi unduh dahulu bila perlu. Arsipkan perjalanan untuk menyembunyikannya dari dashboard tanpa memindahkannya ke Sampah.
+9. **Sinkronisasi**: indikator “Tersinkron” berarti subscription tersambung, bukan bahwa perubahan belum disimpan sudah aman. Tunggu konfirmasi “Tersimpan” atau dialog menutup setelah save. Bila ada konflik, salin isian Anda, segarkan, lalu edit ulang versi terbaru. Tombol refresh tersedia di header.
+10. **Offline**: jangan tutup tab jika masih perlu melihat itinerary yang sudah dimuat. Edit tidak tersedia offline. Setelah online, segarkan untuk mengambil data terbaru.
+11. **Cadangan**: unduh JSON dan itinerary teks di Pengaturan; unduh foto per item di album. Simpan cadangan di perangkat atau penyimpanan pribadi. JSON belum dapat diimpor otomatis.
+12. **Pasang PWA**: Safari → Bagikan → Tambahkan ke Layar Utama; Chrome Android → ⋮ → Instal aplikasi. Jika Google login tidak kembali ke aplikasi terpasang, masuk lewat Safari terlebih dahulu dan catat hasilnya untuk pemeriksaan konfigurasi; perilaku sesi Safari dan PWA bisa berbeda. Uji lagi dalam PWA, jangan menganggap sesi otomatis terbagi.
+
+Itinerary awal Bandung: 30 Oktober–1 November 2026, WIB. Hanya Bubur DPR pukul 07.00 yang dikonfirmasi. Tempat lain dijadwalkan tentatif berdasarkan brief, tanpa alamat, jam buka, atau koordinat yang dibuat-buat.
