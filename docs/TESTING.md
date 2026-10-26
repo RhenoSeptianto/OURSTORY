@@ -2,6 +2,8 @@
 
 ## Status
 
+Pembaruan lokasi album: 13 unit test (3 file) lulus, mencakup album tanpa trip, filter album bebas/perjalanan, label lokasi kustom, kompatibilitas label album lama, dan penyembunyian album yang induknya dihapus. TypeScript, ESLint dan build diperiksa. Migrasi 002 masih harus dijalankan administrator di proyek terhubung; pengujian pemindahan album dengan foto aktual tidak dilakukan oleh agent. RLS/storage tidak dilonggarkan. Pembaruan frontend diterbitkan setelah pengguna mengonfirmasi migrasi selesai.
+
 Implementasi source tersedia untuk ketujuh tahap brief. Konfigurasi layanan eksternal dan acceptance test perangkat nyata **belum selesai**. Pembaruan 27 Oktober: konfigurasi Supabase tersedia di `.env.local` yang diabaikan Git; pengguna telah menjalankan migrasi/seed dengan hasil Success dan mengatur Google OAuth. Layar akses ditolak setelah login sudah terlihat; membership dua UUID dan tes RLS API langsung masih diperlukan. Belum ada deployment GitHub Pages.
 
 ## Pembaruan akses ? 27 Oktober 2026

@@ -14,6 +14,15 @@ do $$ begin
  if not public.is_member() then raise exception 'Rheno membership failed'; end if;
  if (select count(*) from public.trips)<>1 then raise exception 'Member cannot read trip'; end if;
  if (select count(*) from public.destinations)<>10 then raise exception 'Seed must contain exactly ten destinations'; end if;
+ declare album_id uuid; photo_id uuid; begin
+ insert into public.memories(title,location,trip_id) values('Standalone album test','Bogor',null) returning id into album_id;
+ insert into public.memory_photos(memory_id,path,bytes) values(album_id,'test/standalone.webp',100) returning id into photo_id;
+ update public.memories set location='Jakarta',trip_id='10000000-0000-4000-8000-000000000001' where id=album_id;
+ if not exists(select 1 from public.memory_photos where id=photo_id and memory_id=album_id) then raise exception 'Album move lost photo relationship'; end if;
+ begin
+ insert into public.memories(title,trip_id,destination_id) values('Invalid detached destination',null,'20000000-0000-4000-8000-000000000001');
+ raise exception 'Destination memory allowed without trip'; exception when check_violation then null; end;
+ end;
  update public.destinations set status='Visited' where id='20000000-0000-4000-8000-000000000001';
  if (select version from public.destinations where id='20000000-0000-4000-8000-000000000001')<>2 then raise exception 'Version trigger failed'; end if;
  update public.destinations set notes='Stale write' where id='20000000-0000-4000-8000-000000000001' and version=1;

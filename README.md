@@ -13,7 +13,7 @@ Aplikasi privat untuk dua orang, dibuat di workspace `D:\OURSTORY`. React + Type
 ## Supabase dan Google OAuth
 
 1. Buat proyek **Supabase Free**. Simpan password database hanya di pengelola password.
-2. Jalankan `supabase/migrations/001_schema.sql` di SQL Editor administrator sekali. Untuk workflow CLI, migrasi dikelola melalui riwayat migrasi Supabase. Jalankan `supabase/seed.sql`; seed aman diulang dan tidak menimpa itinerary yang sudah diedit.
+2. Jalankan migrasi berurutan: `supabase/migrations/001_schema.sql`, lalu `supabase/migrations/002_album_locations.sql` di SQL Editor administrator. Pada proyek yang sudah memakai 001, jalankan hanya 002 untuk menambah lokasi dan album tanpa perjalanan; tidak menghapus album/foto lama. Untuk workflow CLI, migrasi dikelola melalui riwayat migrasi Supabase. Jalankan `supabase/seed.sql`; seed aman diulang dan tidak menimpa itinerary yang sudah diedit.
 3. Di Google Cloud Console, buat OAuth consent screen dan OAuth client bertipe Web application. Tambahkan dua akun sebagai test users jika consent screen masih Testing. Testing Google dapat mengharuskan login ulang berkala; ikuti konfigurasi Google yang berlaku.
 4. Redirect URI Google adalah `https://PROJECT_REF.supabase.co/auth/v1/callback` (salin persis dari Supabase Authentication → Providers → Google). Isi client ID dan secret **hanya** di dashboard Supabase.
 5. Aktifkan Google provider. Matikan provider email/password jika tidak diperlukan. Di Authentication → URL Configuration, isi Site URL produksi `https://USERNAME.github.io/REPO/`. Tambahkan redirect allowlist persis untuk URL produksi tersebut dan `http://127.0.0.1:5173/` (tambahkan `http://localhost:5173/` hanya bila dipakai).

@@ -50,7 +50,8 @@ export interface Destination extends RecordBase {
   sort_order: number;
 }
 export interface Memory extends RecordBase {
-  trip_id: string;
+  trip_id: string | null;
+  location?: string;
   destination_id: string | null;
   title: string;
   story: string;

@@ -44,12 +44,13 @@ import type { Data, Destination, Memory, Photo, RecordBase, Trip } from "./lib";
 import { useStories } from "./useStories";
 import { Modal, PrivateImage, Upload } from "./components";
 import { DestinationForm, MemoryForm, TripForm } from "./forms";
+import { visibleMemories, memoryLocation } from "./memories";
 
 type Store = ReturnType<typeof useStories>;
 type EditState =
   | { kind: "trip"; trip?: Trip }
   | { kind: "destination"; trip: Trip; destination?: Destination }
-  | { kind: "memory"; trip: Trip; memory?: Memory; destinationId?: string }
+  | { kind: "memory"; trip?: Trip; memory?: Memory; destinationId?: string }
   | null;
 type ConfirmState = { table: string; row: RecordBase; label: string } | null;
 function App() {
@@ -339,8 +340,9 @@ function App() {
         <MemoryForm
           trip={edit.trip}
           memory={edit.memory}
+          trips={store.data.trips}
           destinationId={edit.destinationId}
-          destinations={tripDest(edit.trip)}
+          destinations={store.data.destinations}
           disabled={blocked}
           onClose={() => setEdit(null)}
           onSaved={store.refresh}
@@ -608,9 +610,7 @@ function Dashboard({
   const today = next
     ? tripDest(next).filter((d) => d.date === localDate(next.timezone))
     : [];
-  const allMemories = store.data.memories.filter(
-    (m) => !m.deleted_at && trips.some((t) => t.id === m.trip_id),
-  );
+  const allMemories = visibleMemories(store.data.memories, store.data.trips);
   const days = next
     ? Math.max(
         0,
@@ -1233,7 +1233,7 @@ function Memories({
 }: {
   store: Store;
   disabled: boolean;
-  onEdit: (t: Trip, m?: Memory) => void;
+  onEdit: (t?: Trip, m?: Memory) => void;
   onDelete: (m: Memory) => void;
   action: (fn: () => Promise<unknown>) => Promise<boolean>;
 }) {
@@ -1243,16 +1243,11 @@ function Memories({
     [removePhoto, setRemovePhoto] = useState<Photo | null>(null),
     [caption, setCaption] = useState<Photo | null>(null);
   const ts = store.data.trips.filter((t) => !t.deleted_at),
-    ms = store.data.memories.filter(
-      (m) =>
-        !m.deleted_at &&
-        ts.some((t) => t.id === m.trip_id) &&
-        (!trip || m.trip_id === trip),
-    );
+    ms = visibleMemories(store.data.memories, ts, trip);
   const album = selected
     ? store.data.memories.find((m) => m.id === selected.id)
     : null;
-  const getTrip = (m: Memory) => ts.find((t) => t.id === m.trip_id)!;
+  const getTrip = (m: Memory) => ts.find((t) => t.id === m.trip_id);
   const downloadPhoto = async (p: Photo) => {
     await action(async () => {
       const { data, error } = await db!.storage
@@ -1276,8 +1271,8 @@ function Memories({
         text="Bukan sekadar foto. Ini perasaan yang ingin kita simpan."
       >
         <button
-          disabled={disabled || !ts.length}
-          onClick={() => onEdit(ts.find((t) => t.id === trip) || ts[0])}
+          disabled={disabled}
+          onClick={() => onEdit(ts.find((t) => t.id === trip))}
         >
           <Plus size={16} /> Kenangan baru
         </button>
@@ -1289,7 +1284,8 @@ function Memories({
           value={trip}
           onChange={(e) => setTrip(e.target.value)}
         >
-          <option value="">Semua perjalanan</option>
+          <option value="">Semua album</option>
+          <option value="standalone">Tanpa perjalanan · album bebas</option>
           {ts.map((t) => (
             <option value={t.id} key={t.id}>
               {t.name}
@@ -1318,6 +1314,8 @@ function Memories({
               <small>
                 {fmt(m.date)} ·{" "}
                 {m.destination_id ? "Destination memory" : "Random moment"}
+                {" · "}
+                {memoryLocation(m, ts)}
               </small>
               <p>{m.story || "Sebuah momen milik kita."}</p>
               <div className="card-controls">
@@ -1327,7 +1325,7 @@ function Memories({
                   onClick={() => onEdit(getTrip(m), m)}
                 >
                   <Edit3 size={14} />
-                  Edit cerita
+                  Edit album
                 </button>
                 <button
                   className="icon-button"
@@ -1346,8 +1344,20 @@ function Memories({
         <Modal title={album.title} onClose={() => setSelected(null)}>
           <p>{album.story}</p>
           <small>
-            {fmt(album.date)} · {getTrip(album).name}
+            {fmt(album.date)} · {memoryLocation(album, ts)}
           </small>
+          <div className="actions">
+            <button
+              className="text-button"
+              disabled={disabled}
+              onClick={() => {
+                setSelected(null);
+                onEdit(getTrip(album), album);
+              }}
+            >
+              <Edit3 size={14} /> Edit lokasi & cerita
+            </button>
+          </div>
           <div className="photo-grid">
             {store.data.photos
               .filter((p) => p.memory_id === album.id)
