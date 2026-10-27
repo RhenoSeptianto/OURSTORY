@@ -2,7 +2,7 @@
 
 ## Status
 
-Pembaruan lokal Polaroid dashboard: implementasi selesai dan belum dipush/deploy. **28 tes unit/SQL lokal dan 42 tes browser WebKit/Chrome lulus**, termasuk regresi unggah gambar. Migrasi 003 yang telah disetujui diuji pada PostgreSQL lokal terisolasi, belum diterapkan ke Supabase online. Detail hasil, cakupan dan tes perangkat/live yang masih diperlukan: [POLAROID_GALLERY.md](POLAROID_GALLERY.md).
+Pembaruan Polaroid dashboard: **28 tes unit/SQL lokal dan 42 tes browser WebKit/Chrome lulus**, termasuk regresi unggah gambar; diperiksa ulang 28 Oktober. Administrator telah mengonfirmasi hasil Success untuk migrasi 003 dan memberi izin deployment produksi. Probe REST anonim pada endpoint galeri online ditolak HTTP 401 tanpa data privat. Detail hasil, cakupan dan tes perangkat/live yang masih diperlukan: [POLAROID_GALLERY.md](POLAROID_GALLERY.md).
 
 ## Perbaikan unggah gambar Safari — 27 Oktober 2026
 

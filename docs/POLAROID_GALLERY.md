@@ -1,6 +1,6 @@
 # Polaroid dashboard — implementation and activation
 
-Implemented locally after explicit approval of the one-table additive design. **No production push/deployment and no connected Supabase migration have been performed for this enhancement.** Migration execution in disposable local tests does not change the online database.
+Implemented after explicit approval of the one-table additive design. On **28 October 2026**, the administrator confirmed successful installation of migration 003 in Supabase and explicitly authorized production deployment. The coding agent did not execute the connected migration or use administrative Supabase credentials. Deployment is gated by the existing GitHub Actions checks; see the latest successful run for the deployed revision.
 
 ## What is ready
 
@@ -21,7 +21,7 @@ Implemented locally after explicit approval of the one-table additive design. **
 2. Run only that file in the existing project's Supabase SQL Editor, after 001 and 002 already installed. It is safe to repeat without clearing saved gallery settings.
 3. The script creates one singleton `dashboard_polaroids` row with an ordered JSON array. Entries store photo UUID, caption, fit, X/Y and zoom. It reuses `is_member`, `stamp_record`, `audit_record` and adds the table to the existing Realtime publication.
 4. Existing tables, business logic, bucket policies and Google Auth configuration remain intact. No client insert/delete grants; members can update only `photos`. Direct outsider/anonymous reads/writes remain denied. URLs/blobs cannot be stored as arbitrary extra JSON fields.
-5. After migration success, validate the local feature with an authorized session. Production publishing is a separate user-authorized step; pushing `main` would trigger the existing deployment workflow, so it has intentionally not been done.
+5. After migration success, validate the feature with an authorized session. Production publishing requires explicit authorization; this was given on 28 October 2026. A push to `main` triggers the existing deployment workflow and publishes only after its checks pass.
 
 ## Code changes
 
@@ -42,6 +42,8 @@ Implemented locally after explicit approval of the one-table additive design. **
 ## Verification and limits
 
 Final local results: **28 unit/SQL tests passed** (5 files, including 6 PostgreSQL RLS tests); **42 browser tests passed** (21 WebKit mobile profile, 21 Chrome, including the existing image-upload regression scenarios). ESLint, TypeScript/production build, asset/manifest checks and dependency audit passed; audit reported zero vulnerabilities. Editor screenshots for 320/390/768 px are local ignored artifacts in `test-results/`. Routing/Auth/PWA configuration, deployment workflow and migrations 001/002 were checked with Git and remain unchanged.
+
+The pre-deployment checks above were rerun on 28 October. An anonymous direct REST query against the connected `dashboard_polaroids` endpoint returned HTTP 401 / PostgreSQL `42501`, with no private rows. This verifies anonymous denial for that endpoint; it does not replace positive testing by both real members or tests of all live Storage policies.
 
 Production-preview smoke also passed: login/setup at 320/390/768/1440 px without horizontal overflow, correct project-path service-worker control, offline app-shell reload and no uncaught JavaScript exceptions. Its first attempt could not navigate because the preview server was not running; after starting the local preview, the unchanged smoke script passed. No provider settings were changed for this check.
 
