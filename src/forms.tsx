@@ -287,12 +287,8 @@ export function MemoryForm({
   destinationId?: string;
 }) {
   const { busy, error, run } = useSubmit(onSaved, onClose);
-  const [tripId, setTripId] = useState(
-    memory ? memory.trip_id || "" : trip?.id || "",
-  );
-  const [placeId, setPlaceId] = useState(
-    memory?.destination_id || destinationId || "",
-  );
+  const tripId = memory ? memory.trip_id : trip?.id || null;
+  const placeId = memory ? memory.destination_id : destinationId || null;
   const selectedTrip = trips.find((t) => t.id === tripId);
   return (
     <Modal
@@ -340,51 +336,6 @@ export function MemoryForm({
             defaultValue={memory?.location || ""}
             placeholder="Contoh: Bogor, taman kota, atau rumah"
           />
-        </label>
-        <label>
-          Perjalanan (opsional)
-          <select
-            name="trip_id"
-            value={tripId}
-            onChange={(e) => {
-              setTripId(e.target.value);
-              setPlaceId("");
-            }}
-          >
-            <option value="">Tanpa perjalanan · album bebas</option>
-            {trips
-              .filter((t) => !t.deleted_at)
-              .map((t) => (
-                <option key={t.id} value={t.id}>
-                  {t.name}
-                </option>
-              ))}
-          </select>
-        </label>
-        <small>
-          Lokasi bisa diisi sendiri. Pilih tanpa perjalanan untuk foto di luar
-          itinerary.
-        </small>
-        <label>
-          Jenis kenangan
-          <select
-            name="destination_id"
-            value={placeId}
-            onChange={(e) => setPlaceId(e.target.value)}
-            disabled={!tripId}
-          >
-            <option value="">Random moment · momen spontan</option>
-            {destinations
-              .filter(
-                (d) =>
-                  d.trip_id === tripId && (!d.deleted_at || d.id === placeId),
-              )
-              .map((d) => (
-                <option value={d.id} key={d.id}>
-                  {d.name}
-                </option>
-              ))}
-          </select>
         </label>
         <label>
           Tanggal

@@ -1,6 +1,6 @@
 # Panduan Rheno & Fadla
 
-**Lokasi album:** setelah migrasi 002 dipasang, buka Kenangan → Edit album (atau buka album → Edit lokasi & cerita). Isi lokasi, misalnya Bogor. Pilih “Tanpa perjalanan · album bebas” untuk foto di luar itinerary, atau pindahkan ke perjalanan lain. Mengubah perjalanan akan melepas tautan destinasi lama; pilih destinasi baru jika diperlukan. Foto dan cerita tetap terikat ke ID album yang sama, tidak perlu diunggah ulang. Kenangan baru dari halaman album tidak otomatis memilih Bandung. Filter “Tanpa perjalanan” menampilkan album bebas.
+**Lokasi album:** buka Kenangan ? Edit album (atau buka album ? Edit lokasi & cerita). Cukup isi judul, lokasi secara manual, tanggal, dan cerita lalu simpan. Tidak ada pilihan perjalanan atau jenis kenangan di form. Album baru dari halaman Kenangan tidak otomatis masuk Bandung; album yang dibuat dari checklist tetap terhubung otomatis ke tempatnya. Edit lokasi album lama mempertahankan foto dan tautan asalnya tanpa perlu unggah ulang.
 
 1. **Masuk** dengan akun Google yang sudah didaftarkan administrator. Jika akses ditolak, keluar dan pilih akun yang benar. Jangan membagikan sesi login atau tautan unduh foto.
 2. **Ruang Kita** menampilkan perjalanan aktif, perjalanan mendatang terdekat, atau cerita terakhir, progres, kenangan terbaru, dan rencana hari ini. Hitung mundur mengikuti tanggal di zona waktu perjalanan.
