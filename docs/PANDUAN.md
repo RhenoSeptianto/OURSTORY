@@ -1,5 +1,7 @@
 # Panduan Rheno & Fadla
 
+**Polaroid dashboard (setelah diaktifkan):** ketuk ikon pensil di bingkai dashboard. Pilih foto dari Kenangan atau unggah baru, maksimal lima. Panah naik/turun mengatur urutan, caption opsional, dan Atur posisi membuka geser/zoom dengan Reset. Foto utuh adalah tampilan awal. Batal membuang draft; Simpan Polaroid menyimpan pilihan bersama. Foto baru baru diunggah saat Simpan dan tersimpan juga di album Our Polaroids ♡. Melepas pilihan tidak menghapus foto aslinya. Jika penyimpanan pengaturan gagal setelah foto berhasil diunggah, foto tetap ada di Kenangan; coba Simpan lagi tanpa mengunggah salinan baru. Jika sumber tidak tersedia, segarkan Kenangan atau lepaskan pilihan yang ditandai. [Aktivasi dan batas pengujian](POLAROID_GALLERY.md).
+
 Di halaman Kenangan, ketik judul album pada **Cari judul album**. Pencarian mengikuti judul yang kamu isi/edit dan tidak menampilkan album di Sampah. Kosongkan pencarian untuk melihat semua album; tidak ada lagi dropdown perjalanan.
 
 **Lokasi album:** buka Kenangan ? Edit album (atau buka album ? Edit lokasi & cerita). Cukup isi judul, lokasi secara manual, tanggal, dan cerita lalu simpan. Tidak ada pilihan perjalanan atau jenis kenangan di form. Album baru dari halaman Kenangan tidak otomatis masuk Bandung; album yang dibuat dari checklist tetap terhubung otomatis ke tempatnya. Edit lokasi album lama mempertahankan foto dan tautan asalnya tanpa perlu unggah ulang.

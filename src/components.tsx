@@ -7,10 +7,12 @@ export function Modal({
   title,
   children,
   onClose,
+  className = "",
 }: {
   title: string;
   children: ReactNode;
   onClose: () => void;
+  className?: string;
 }) {
   const root = useRef<HTMLElement>(null),
     close = useRef(onClose);
@@ -49,13 +51,16 @@ export function Modal({
     };
   }, []);
   return (
-    <div className="modal-backdrop" onClick={onClose}>
+    <div
+      className={"modal-backdrop " + (className ? className + "-backdrop" : "")}
+      onClick={onClose}
+    >
       <section
         ref={root}
         role="dialog"
         aria-modal="true"
         aria-label={title}
-        className="modal"
+        className={"modal " + className}
         onClick={(e) => e.stopPropagation()}
       >
         <header>
@@ -107,7 +112,7 @@ export function PrivateImage({
       clearInterval(timer);
     };
   }, [path]);
-  return url ? (
+  return url && !failed ? (
     <img
       loading="lazy"
       decoding="async"
@@ -116,6 +121,7 @@ export function PrivateImage({
       src={url}
       alt={alt}
       onClick={onClick}
+      onError={() => setFailed(true)}
     />
   ) : (
     <div className={"image-placeholder " + className}>

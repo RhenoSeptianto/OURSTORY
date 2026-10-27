@@ -46,6 +46,7 @@ import { Modal, PrivateImage, Upload } from "./components";
 import { DestinationForm, MemoryForm, TripForm } from "./forms";
 import { visibleMemories, memoryLocation } from "./memories";
 import { imageExtension } from "./images";
+import { PolaroidGallery } from "./polaroids/PolaroidGallery";
 
 type Store = ReturnType<typeof useStories>;
 type EditState =
@@ -657,13 +658,12 @@ function Dashboard({
           </div>
         </div>
         <div className="hero-art">
-          <div className="polaroid big">
-            <PrivateImage
-              path={next?.cover_path}
-              alt="a little escape together"
-            />
-            <span>you, me & somewhere new ♡</span>
-          </div>
+          <PolaroidGallery
+            data={store.data}
+            memberId={store.member!.id}
+            online={store.online}
+            onRefresh={store.refresh}
+          />
           <span className="tape" />
           <div className="postmark">
             <Compass size={34} />

@@ -2,6 +2,8 @@
 
 Aplikasi privat untuk dua orang, dibuat di workspace `D:\OURSTORY`. React + TypeScript + Vite, Tailwind, Lucide, Supabase, dan PWA. Tidak menggunakan server aplikasi tambahan, API Maps berbayar, atau database simulasi. Tanpa konfigurasi cloud, halaman menampilkan status setup, bukan data privat palsu.
 
+Galeri Polaroid dashboard: pilih sampai lima foto privat, atur urutan/caption/posisi, lalu simpan bersama. Pengaktifan memerlukan migrasi tambahan `003_dashboard_polaroids.sql` setelah 001/002. [Panduan fitur, pengujian dan aktivasi](docs/POLAROID_GALLERY.md). Pengembangan ini belum diterbitkan ke produksi otomatis.
+
 ## Menjalankan lokal
 
 1. Instal Node.js 22 LTS (minimal 22.13; disarankan patch terbaru).

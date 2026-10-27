@@ -1,0 +1,524 @@
+/* Scoped to the dashboard Polaroid and its editor; existing page layouts stay intact. */
+.dashboard-polaroid {
+  position: relative;
+  min-width: 0;
+}
+.polaroid-player {
+  outline-offset: 4px;
+  position: relative;
+  min-width: 0;
+}
+.polaroid-viewport {
+  width: 100%;
+  height: 245px;
+  position: relative;
+  overflow: hidden;
+  background: #eee9e0;
+  touch-action: pan-y pinch-zoom;
+}
+.polaroid-layer {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.45s ease;
+  pointer-events: none;
+}
+.polaroid-layer.is-current {
+  opacity: 1;
+  z-index: 1;
+}
+.polaroid-photo {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+.hero-art .dashboard-polaroid .polaroid-photo img,
+.modal.polaroid-dialog .polaroid-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: var(--photo-fit, contain);
+  object-position: var(--photo-position, 50% 50%);
+  transform: scale(var(--photo-zoom, 1));
+  transform-origin: var(--photo-position, 50% 50%);
+  display: block;
+}
+.hero-art .dashboard-polaroid .polaroid-viewport .image-placeholder,
+.modal.polaroid-dialog .polaroid-photo .image-placeholder {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+}
+.polaroid-caption {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 14px;
+  height: 34px;
+  padding: 8px 4px 2px;
+  text-align: center;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow-wrap: anywhere;
+  line-height: 1.3;
+}
+.polaroid-dots {
+  height: 21px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 -8px;
+}
+.polaroid-dots button {
+  width: 24px;
+  min-width: 0;
+  height: 28px;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  border-radius: 6px;
+}
+.polaroid-dots span {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  display: block;
+  background: #d8c7c1;
+}
+.polaroid-dots [aria-current="true"] span {
+  background: #8d5263;
+  width: 7px;
+  height: 7px;
+}
+.polaroid-arrow {
+  position: absolute;
+  top: calc(50% - 20px);
+  z-index: 2;
+  width: 32px;
+  height: 40px;
+  padding: 0;
+  background: #fffcf5e8;
+  color: #60474b;
+  border: 0;
+  border-radius: 6px;
+  opacity: 0;
+}
+.polaroid-arrow.prev {
+  left: 5px;
+}
+.polaroid-arrow.next {
+  right: 5px;
+}
+.polaroid-player:hover .polaroid-arrow,
+.polaroid-player:focus-within .polaroid-arrow {
+  opacity: 1;
+}
+.polaroid-edit {
+  position: absolute;
+  z-index: 4;
+  right: -12px;
+  top: -16px;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border-radius: 50%;
+  background: #fffaf4;
+  color: #795362;
+  border: 1px solid #d7c1b6;
+  box-shadow: 0 3px 10px #60474b19;
+  transform: rotate(-7deg);
+}
+.polaroid-edit:hover {
+  background: #f3e7de;
+}
+.polaroid-feedback {
+  position: absolute;
+  left: -5px;
+  right: -5px;
+  bottom: -38px;
+  background: #fffaf4;
+  border-radius: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  font: 10px/1.5 var(--font-sans);
+  padding: 5px 0 8px;
+  text-align: center;
+}
+.polaroid-feedback .icon-button {
+  padding: 3px;
+  min-width: 24px;
+}
+.polaroid-player.still .polaroid-layer {
+  transition: none;
+}
+.modal.polaroid-dialog {
+  max-width: 740px;
+}
+.modal.polaroid-dialog h2 {
+  font-size: 25px;
+}
+.polaroid-editor > p {
+  font-size: 12px;
+}
+.polaroid-editor-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 22px 0 13px;
+}
+.polaroid-editor-toolbar strong {
+  font-size: 12px;
+  font-weight: 600;
+}
+.polaroid-fields {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+}
+.polaroid-selection {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 12px;
+}
+.polaroid-selection > li {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 13px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: #fffaf5;
+}
+.polaroid-thumb {
+  width: 70px;
+  height: 83px;
+  flex-shrink: 0;
+  border: 4px solid #fffdf8;
+  box-shadow: 0 2px 8px #60474b12;
+  background: #eee9e0;
+}
+.polaroid-thumb > span {
+  font-size: 9px;
+}
+.polaroid-item-fields {
+  flex: 1;
+  min-width: 0;
+}
+.polaroid-item-fields input {
+  font-size: 12px;
+}
+.polaroid-item-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 7px;
+}
+.polaroid-item-actions button {
+  font-size: 11px;
+  min-height: 34px;
+}
+.polaroid-order {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+}
+.polaroid-order button {
+  min-width: 36px;
+  min-height: 30px;
+  padding: 5px;
+}
+.polaroid-add-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 19px 0 10px;
+}
+.polaroid-add-actions button {
+  flex: 1;
+  font-size: 12px;
+  min-height: 44px;
+}
+.polaroid-empty {
+  text-align: center;
+  background: #f6eee7;
+  border: 1px dashed #d7c4b8;
+  border-radius: 10px;
+  padding: 25px;
+}
+.polaroid-empty p {
+  font-family: var(--serif);
+  font-size: 20px;
+  margin: 12px 0 0;
+}
+.polaroid-picker {
+  background: #f5eee8;
+  border: 1px solid #e3d4ca;
+  padding: 18px;
+  border-radius: 10px;
+  margin: 16px 0;
+}
+.polaroid-picker h3 {
+  font-size: 20px;
+  margin: 0;
+}
+.polaroid-picker-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 9px;
+  margin: 15px 0;
+}
+.polaroid-pick {
+  padding: 0;
+  height: 110px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 6px;
+  background: #e9e3da;
+  border: 2px solid transparent;
+}
+.polaroid-pick img,
+.polaroid-pick .image-placeholder {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  min-height: 0;
+}
+.polaroid-pick > span {
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+  left: 4px;
+  background: #fff9eff0;
+  color: #60474b;
+  padding: 4px;
+  font-size: 9px;
+  border-radius: 4px;
+}
+.polaroid-pick:disabled {
+  opacity: 0.65;
+  border-color: #8ea99a;
+}
+.polaroid-pick .image-placeholder span {
+  font-size: 11px;
+}
+.polaroid-save-actions {
+  position: sticky;
+  bottom: -27px;
+  background: #fffcf9;
+  border-top: 1px solid var(--line);
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin: 20px -3px -3px;
+  padding: 16px 3px 3px;
+  z-index: 3;
+}
+.polaroid-save-actions button {
+  min-height: 44px;
+}
+.editor-warning {
+  display: block;
+  background: #f2eadc;
+  border-radius: 7px;
+  padding: 12px;
+  font-size: 12px;
+  line-height: 1.7;
+  color: #765f4f;
+}
+.editor-warning .text-button {
+  margin: 4px 0 0;
+}
+.polaroid-position {
+  margin: 18px 0;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: #f5eee8;
+}
+.polaroid-position h3 {
+  font-size: 21px;
+  margin: 0;
+}
+.polaroid-position p {
+  font-size: 11px;
+}
+.crop-viewport {
+  width: 200px;
+  aspect-ratio: 1;
+  overflow: hidden;
+  margin: 15px auto;
+  background: #e6dfd4;
+  touch-action: none;
+  cursor: grab;
+}
+.crop-viewport:active {
+  cursor: grabbing;
+}
+.crop-fit {
+  display: flex;
+  gap: 10px;
+  margin: 15px 0;
+}
+.crop-fit button {
+  flex: 1;
+  min-height: 44px;
+  font-size: 12px;
+}
+.polaroid-position label {
+  margin: 13px 0;
+  font-size: 11px;
+}
+.polaroid-position input[type="range"] {
+  padding: 6px 0;
+  accent-color: #8d5263;
+  box-shadow: none;
+  min-height: 35px;
+}
+.polaroid-preview {
+  display: flex;
+  justify-content: center;
+  padding: 8px 0 22px;
+}
+.polaroid-preview > .polaroid {
+  width: 240px;
+  transform: rotate(3deg);
+}
+.modal.polaroid-dialog .polaroid-viewport {
+  height: 220px;
+}
+@media (min-width: 1450px) {
+  .dashboard-polaroid .polaroid-viewport {
+    height: 275px;
+  }
+}
+@media (max-width: 1150px) {
+  .dashboard-polaroid .polaroid-viewport {
+    height: 220px;
+  }
+}
+@media (max-width: 850px) {
+  .dashboard-polaroid .polaroid-viewport {
+    height: 200px;
+  }
+  .dashboard-polaroid .polaroid-caption {
+    font-size: 11px;
+  }
+}
+@media (hover: none) {
+  .dashboard-polaroid .polaroid-arrow {
+    display: none;
+  }
+}
+@media (max-width: 650px) {
+  .dashboard-polaroid .polaroid-viewport {
+    height: 155px;
+  }
+  .dashboard-polaroid .polaroid-caption {
+    font-size: 10px;
+    height: 24px;
+    padding: 4px 2px 1px;
+  }
+  .dashboard-polaroid .polaroid-dots {
+    height: 20px;
+  }
+  .dashboard-polaroid .polaroid-dots button {
+    width: 24px;
+    height: 24px;
+  }
+  .polaroid-feedback {
+    font-size: 8px;
+    line-height: 1.4;
+  }
+  .modal-backdrop.polaroid-dialog-backdrop {
+    padding: env(safe-area-inset-top) 0 0;
+    align-items: flex-end;
+  }
+  .modal.polaroid-dialog {
+    max-height: calc(100dvh - env(safe-area-inset-top));
+    border-radius: 18px 18px 0 0;
+    padding: 22px 18px calc(20px + env(safe-area-inset-bottom));
+    max-width: none;
+  }
+  .modal.polaroid-dialog h2 {
+    font-size: 23px;
+  }
+  .modal.polaroid-dialog input[type="text"],
+  .modal.polaroid-dialog input:not([type]),
+  .modal.polaroid-dialog input[type="search"] {
+    font-size: 16px;
+  }
+  .polaroid-selection > li {
+    padding: 10px;
+    gap: 9px;
+  }
+  .polaroid-thumb {
+    width: 53px;
+    height: 70px;
+  }
+  .polaroid-item-fields label {
+    font-size: 10px;
+  }
+  .polaroid-order button {
+    min-width: 44px;
+    min-height: 44px;
+  }
+  .polaroid-item-actions {
+    gap: 10px;
+    margin-top: 4px;
+  }
+  .polaroid-item-actions button {
+    font-size: 10px;
+    min-height: 44px;
+  }
+  .polaroid-add-actions {
+    flex-direction: column;
+  }
+  .polaroid-picker {
+    padding: 13px;
+  }
+  .polaroid-picker-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+  }
+  .polaroid-pick {
+    height: 100px;
+  }
+  .polaroid-save-actions {
+    bottom: calc(-20px - env(safe-area-inset-bottom));
+    padding-bottom: calc(12px + env(safe-area-inset-bottom));
+  }
+  .polaroid-save-actions button {
+    flex: 1;
+  }
+  .polaroid-position {
+    padding: 14px;
+  }
+}
+@media (max-width: 360px) {
+  .dashboard-polaroid .polaroid-viewport {
+    height: 143px;
+  }
+  .polaroid-picker-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .modal.polaroid-dialog h2 {
+    font-size: 21px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .polaroid-layer {
+    transition: none !important;
+  }
+}
+
+.modal.polaroid-dialog header > .icon-button {
+  min-width: 44px;
+  min-height: 44px;
+}

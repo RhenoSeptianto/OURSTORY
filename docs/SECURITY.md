@@ -1,5 +1,7 @@
 # Checklist keamanan
 
+Pengaturan Polaroid memakai satu tabel tambahan dengan RLS `is_member()`, validasi maksimal lima referensi foto dan crop, serta update berbasis versi. Pengguna hanya dapat mengubah kolom `photos`; tidak ada grant insert/delete atau perubahan membership. Bucket foto dan policy tabel lama tidak diperluas. Enam tes PostgreSQL lokal menguji policy/privilege konfigurasi baru; tes API/Storage live tetap wajib setelah aktivasi. Lihat `docs/POLAROID_GALLERY.md`.
+
 ## Implementasi source
 
 - [x] UUID anggota diprovisikan hanya administrator; label unik membatasi dua anggota.
