@@ -9,8 +9,22 @@ permissions:
   id-token: write
 concurrency:
   group: pages
-  cancel-in-progress: false
+  cancel-in-progress: true
 jobs:
+  browser-images:
+    runs-on: windows-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Install WebKit
+        run: npx playwright install webkit
+      - name: Test gallery image handling on WebKit
+        run: npm run test:images -- --project=webkit-mobile
   build:
     runs-on: ubuntu-latest
     env:
@@ -26,10 +40,6 @@ jobs:
       - run: npm ci
       - run: npm run lint
       - run: npm test
-      - name: Install WebKit for image regression tests
-        run: npx playwright install --with-deps webkit
-      - name: Test gallery image handling on WebKit
-        run: npm run test:images -- --project=webkit-mobile
       - name: Validate public configuration
         run: |
           test -n "$VITE_SUPABASE_URL" && test -n "$VITE_SUPABASE_PUBLISHABLE_KEY"
@@ -45,7 +55,7 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-    needs: build
+    needs: [build, browser-images]
     steps:
       - name: Deploy
         id: deployment
