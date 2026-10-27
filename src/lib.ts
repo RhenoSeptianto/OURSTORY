@@ -165,36 +165,4 @@ export function download(
   a.click();
   setTimeout(() => URL.revokeObjectURL(url), 2000);
 }
-export const MAX_DIMENSION = 1800,
-  MAX_BYTES = 1500000;
-export async function optimize(file: File) {
-  if (
-    !["image/jpeg", "image/png", "image/webp"].includes(file.type) ||
-    file.size > 25000000
-  )
-    throw Error(
-      "Pilih JPG, PNG, atau WebP hingga 25 MB. Ekspor HEIC sebagai JPG terlebih dahulu.",
-    );
-  const bitmap = await createImageBitmap(file, {
-    imageOrientation: "from-image",
-  });
-  const ratio = Math.min(
-    1,
-    MAX_DIMENSION / Math.max(bitmap.width, bitmap.height),
-  );
-  const canvas = document.createElement("canvas");
-  canvas.width = Math.round(bitmap.width * ratio);
-  canvas.height = Math.round(bitmap.height * ratio);
-  canvas.getContext("2d")!.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
-  bitmap.close();
-  let blob: Blob | null = null;
-  for (let quality = 0.86; quality >= 0.36; quality -= 0.1) {
-    blob = await new Promise<Blob | null>((resolve) =>
-      canvas.toBlob(resolve, "image/webp", quality),
-    );
-    if (blob && blob.size <= MAX_BYTES) break;
-  }
-  if (!blob || blob.size > MAX_BYTES)
-    throw Error("Foto masih terlalu besar. Pilih foto lebih kecil.");
-  return blob;
-}
+export { optimize, MAX_DIMENSION, MAX_BYTES } from "./images";

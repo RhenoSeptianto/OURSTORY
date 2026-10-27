@@ -46,7 +46,7 @@ Referensi resmi: [Google OAuth](https://supabase.com/docs/guides/auth/social-log
 ## Arsitektur dan perawatan
 
 - `src/useStories.ts`: pemeriksaan UUID anggota sebelum query data, sesi Auth, subscription Realtime, refresh saat fokus/reconnect, polling pemulihan tiap 60 detik **hanya selama aplikasi terbuka**.
-- `src/lib.ts`: persistence dengan compare-and-swap `version`, perhitungan tanggal zona tujuan, kompresi foto standar canvas tanpa AI.
+- `src/lib.ts`: persistence dengan compare-and-swap `version` dan perhitungan tanggal zona tujuan. `src/images.ts`: decode gambar native, pemeriksaan encoder, dan kompresi canvas tanpa AI.
 - `src/App.tsx`, `forms.tsx`, `components.tsx`: dashboard, CRUD trip dan itinerary, album, sampah, ekspor, upload dan URL foto privat.
 - `supabase/migrations`: relasi, RLS, audit metadata, trigger versi/editor, bucket privat, publikasi Realtime.
 - `public/`: ikon raster dari SVG asli dan aset PWA; `node scripts/icons.mjs` untuk regenerasi.
@@ -55,7 +55,9 @@ Referensi resmi: [Google OAuth](https://supabase.com/docs/guides/auth/social-log
 
 Sampah bersifat soft delete tanpa batas retensi otomatis. Trip yang dihapus menyembunyikan anak-anaknya di UI; pulihkan trip untuk membuka anak-anaknya kembali. Riwayat aktivitas hanya merekam jenis perubahan, ID dan aktor, bukan salinan konten historis. Konflik edit menolak penyimpanan yang memakai versi lama dan meminta refresh. Form tetap terbuka sehingga isi dapat disalin sebelum mencoba ulang. Perubahan checklist disimpan dulu; menutup dialog kenangan tidak membatalkannya.
 
-Foto JPG/PNG/WebP hingga 25 MB diperkecil maks. 1800 px dan ditargetkan ≤1,5 MB. MIME dan ukuran divalidasi di klien serta bucket; canvas menulis ulang piksel sehingga metadata GPS tidak ikut disalin. EXIF orientation diproses oleh browser. HEIC perlu diekspor sebagai JPG. Salinan lossy tidak menjamin identik per piksel; identitas visual tidak direkonstruksi AI. Upload menampilkan tahap optimasi/upload/simpan, bukan persentase jaringan palsu. Pilih ulang file untuk retry. Download foto dilakukan satu per satu, tanpa memuat seluruh pustaka ke memori.
+Pilih gambar langsung dari galeri; tidak diwajibkan mengubah format input. Browser mencoba decode gambar hingga 25 MB (termasuk HEIC/HEIF bila decoder perangkat mendukungnya). Gambar diperkecil maks. 1800 px dan ditargetkan ≤1,5 MB. Aplikasi memeriksa MIME hasil encoder: gunakan WebP jika tersedia, JPEG untuk foto opak bila WebP tidak tersedia, atau PNG agar transparansi dipertahankan. Jika masih besar, dimensi dikurangi bertahap dari sumber asli. Nama berkas dan content type mengikuti MIME hasil yang sebenarnya. Canvas menulis ulang piksel tanpa EXIF/GPS; orientasi diproses decoder browser. Gambar rusak/format yang belum dapat dibaca mendapat pesan khusus. GIF/gambar bergerak menjadi salinan statis. Tidak ada janji dukungan semua codec di semua OS. Salinan lossy tidak menjamin identik per piksel; identitas visual tidak direkonstruksi AI. Foto asli tidak diubah. Upload menampilkan tahap baca/optimasi/upload/simpan, bukan persentase jaringan palsu. Pilih ulang file untuk retry. Download foto dilakukan satu per satu, tanpa memuat seluruh pustaka ke memori.
+
+Pengujian gambar: `npx playwright install webkit`, lalu `npm run test:images -- --project=webkit-mobile`. Tanpa filter, tes juga memakai Chrome yang terinstal. GitHub Actions menjalankan regresi WebKit sebelum deployment. Fixture sintetis dan storage stub hanya dipakai di harness tes, tidak dibundel ke aplikasi produksi dan tidak mengunggah ke Supabase. Playwright WebKit dengan viewport iPhone bukan aplikasi Safari/iPhone asli; codec HEIC, pemilih galeri dan keterbatasan memori perangkat masih perlu pengujian fisik. [Batas pengujian browser Playwright](https://playwright.dev/docs/browsers).
 
 ## Privasi, offline, biaya, dan batas operasional
 

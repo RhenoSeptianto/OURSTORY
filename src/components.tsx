@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { X, ImagePlus, LoaderCircle } from "lucide-react";
 import { db, optimize } from "./lib";
+import { imageExtension } from "./images";
 import type { ReactNode } from "react";
 export function Modal({
   title,
@@ -140,8 +141,8 @@ export function Upload({
     setError("");
     try {
       setStage("Mengoptimalkan…");
-      const blob = await optimize(file);
-      path = `shared/${crypto.randomUUID()}.${blob.type === "image/webp" ? "webp" : "jpg"}`;
+      const blob = await optimize(file, { onStage: setStage });
+      path = `shared/${crypto.randomUUID()}.${imageExtension(blob.type)}`;
       setStage("Mengunggah…");
       const { error } = await db!.storage
         .from("memories")
@@ -177,7 +178,7 @@ export function Upload({
         {stage || label}
         <input
           type="file"
-          accept="image/jpeg,image/png,image/webp"
+          accept="image/*,.heic,.heif"
           disabled={disabled || Boolean(stage)}
           onChange={(e) => {
             void upload(e.target.files?.[0]);

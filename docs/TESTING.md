@@ -2,6 +2,17 @@
 
 ## Status
 
+## Perbaikan unggah gambar Safari — 27 Oktober 2026
+
+- Pemilih file menerima gambar galeri, termasuk ekstensi HEIC/HEIF; pemrosesan memakai decoder native browser, bukan validasi yang hanya menerima JPEG/PNG/WebP.
+- Encoder diperiksa melalui MIME Blob aktual. Saat WebP tidak tersedia, foto opak memakai salinan JPEG otomatis, transparansi memakai PNG. Dimensi dikurangi bertahap jika target 1.500.000 byte belum tercapai. Sumber galeri tidak diubah. Nama berkas dan content type selalu sesuai hasil.
+- **12 tes Playwright lulus**: 6 pada WebKit 27.2 (build 2370) dengan profil viewport iPhone 13 di Windows, 6 pada Chrome. Cakupan: PNG sintetis 18.033.955 byte menjadi sekitar 1,15 MB; fallback encoder, resize bertahap, alpha PNG, orientasi EXIF 6 dan metadata EXIF dibuang, MIME input kosong, file rusak/non-gambar, pemilih file serta panggilan uploader dengan ekstensi/MIME/ukuran yang benar.
+- WebKit terbaru di mesin tes dapat menulis WebP. Perilaku Safari lama yang mengembalikan PNG untuk permintaan WebP diuji dengan override `canvas.toBlob` pada dua browser; bukan klaim reproduksi di Safari fisik.
+- Alur upload memakai komponen aplikasi yang sebenarnya dengan storage stub hanya pada `browser-tests/upload.html`; tidak ada foto pribadi atau kredensial asli dalam fixture, tidak ada unggahan ke cloud. Harness tidak termasuk build produksi.
+- **13 unit test lulus**, lint dan build produksi lulus. CI ditambah tes WebKit sebelum deployment.
+- **Safari iPhone asli belum diuji oleh agent** karena host Windows. Tes ini tidak membuktikan perilaku pemilih galeri iOS, codec HEIC sistem, atau batas memori perangkat. Uji penerimaan: buka Safari iPhone setelah update, unggah foto galeri yang sebelumnya gagal, cek preview/orientasi dan reload album untuk memastikan metadata serta berkas tersimpan.
+- Pengujian ulang: `npx playwright install webkit`, `npm run test:images -- --project=webkit-mobile`. Untuk Chrome terinstal juga: `npm run test:images`.
+
 Pembaruan lokasi album: 13 unit test (3 file) lulus, mencakup album tanpa trip, filter album bebas/perjalanan, label lokasi kustom, kompatibilitas label album lama, dan penyembunyian album yang induknya dihapus. TypeScript, ESLint dan build diperiksa. Migrasi 002 masih harus dijalankan administrator di proyek terhubung; pengujian pemindahan album dengan foto aktual tidak dilakukan oleh agent. RLS/storage tidak dilonggarkan. Pembaruan frontend diterbitkan setelah pengguna mengonfirmasi migrasi selesai.
 
 Implementasi source tersedia untuk ketujuh tahap brief. Konfigurasi layanan eksternal dan acceptance test perangkat nyata **belum selesai**. Pembaruan 27 Oktober: konfigurasi Supabase tersedia di `.env.local` yang diabaikan Git; pengguna telah menjalankan migrasi/seed dengan hasil Success dan mengatur Google OAuth. Layar akses ditolak setelah login sudah terlihat; membership dua UUID dan tes RLS API langsung masih diperlukan. Belum ada deployment GitHub Pages.
@@ -79,7 +90,7 @@ Tambahkan acceptance tests API live: insert/update destination/memory/photo bagi
 - [ ] Checklist Visited tersimpan sebelum dialog; Skip for now tidak membatalkan; undo tidak menghapus kenangan; Skipped tidak dianggap Visited.
 - [ ] Dua perangkat menerima perubahan Realtime; putus jaringan lalu reconnect/refresh.
 - [ ] Buka edit item sama pada dua perangkat, simpan A lalu B; B harus mendapat konflik dan tidak menimpa A.
-- [ ] Upload beberapa JPG/PNG/WebP termasuk EXIF rotated; cek orientasi, rasio, wajah asli, kompresi, error/retry; HEIC mendapat instruksi konversi.
+- [ ] Pilih gambar galeri di Safari iPhone nyata, termasuk HEIC bila didukung OS; cek orientasi, rasio, wajah asli, kompresi, error/retry. Format yang tidak dapat dibaca harus mendapat pesan khusus tanpa mewajibkan semua pengguna mengonversi gambar ke JPEG.
 - [ ] Preview/edit caption/download/hapus foto; album Destination dan Random moment; filter per trip.
 - [ ] Simulasikan gagal simpan metadata setelah upload; berkas dihapus kembali. Periksa file yatim saat penggantian cover dan gagal hapus berkas.
 - [ ] Ekspor JSON/teks; unduh foto satu per satu dan cek hasilnya.

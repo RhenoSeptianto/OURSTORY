@@ -45,6 +45,7 @@ import { useStories } from "./useStories";
 import { Modal, PrivateImage, Upload } from "./components";
 import { DestinationForm, MemoryForm, TripForm } from "./forms";
 import { visibleMemories, memoryLocation } from "./memories";
+import { imageExtension } from "./images";
 
 type Store = ReturnType<typeof useStories>;
 type EditState =
@@ -1254,13 +1255,7 @@ function Memories({
         .from("memories")
         .download(p.path);
       if (error) throw error;
-      download(
-        "our-memory-" +
-          p.id +
-          "." +
-          (data.type === "image/webp" ? "webp" : "jpg"),
-        data,
-      );
+      download("our-memory-" + p.id + "." + imageExtension(data.type), data);
     });
   };
   return (

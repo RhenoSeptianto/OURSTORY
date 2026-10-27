@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    <main id="upload-test"></main>
+    <script type="module">
+      // Test-only harness; not an input to the production build. No cloud upload is performed.
+      import React from "react";
+      import { createRoot } from "react-dom/client";
+      import { Upload } from "../src/components.tsx";
+      import { db } from "../src/lib.ts";
+      window.uploadCalls = [];
+      db.storage.from = () => ({
+        upload: async (path, blob, options) => {
+          window.uploadCalls.push({
+            path,
+            type: blob.type,
+            bytes: blob.size,
+            contentType: options.contentType,
+          });
+          return { error: null };
+        },
+        remove: async () => ({ error: null }),
+      });
+      createRoot(document.getElementById("upload-test")).render(
+        React.createElement(Upload, {
+          onUpload: async (path, bytes) => {
+            window.savedPhoto = { path, bytes };
+            document.body.dataset.saved = "yes";
+          },
+        }),
+      );
+    </script>
+  </body>
+</html>
