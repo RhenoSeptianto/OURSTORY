@@ -443,7 +443,7 @@ function Welcome({
         </h2>
         <p>Rheno ♡ Fadla</p>
         <div className="route-line">
-          BANDUNG <span>· · · · ♡ · · · ·</span> EVERYWHERE
+          ANYWHERE <span>· · · · ♡ · · · ·</span> TOGETHER
         </div>
       </div>
       <section className="welcome-content">
