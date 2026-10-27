@@ -1,5 +1,7 @@
 # Panduan Rheno & Fadla
 
+Di halaman Kenangan, ketik judul album pada **Cari judul album**. Pencarian mengikuti judul yang kamu isi/edit dan tidak menampilkan album di Sampah. Kosongkan pencarian untuk melihat semua album; tidak ada lagi dropdown perjalanan.
+
 **Lokasi album:** buka Kenangan ? Edit album (atau buka album ? Edit lokasi & cerita). Cukup isi judul, lokasi secara manual, tanggal, dan cerita lalu simpan. Tidak ada pilihan perjalanan atau jenis kenangan di form. Album baru dari halaman Kenangan tidak otomatis masuk Bandung; album yang dibuat dari checklist tetap terhubung otomatis ke tempatnya. Edit lokasi album lama mempertahankan foto dan tautan asalnya tanpa perlu unggah ulang.
 
 1. **Masuk** dengan akun Google yang sudah didaftarkan administrator. Jika akses ditolak, keluar dan pilih akun yang benar. Jangan membagikan sesi login atau tautan unduh foto.

@@ -6,10 +6,10 @@ const trips = [
   { id: "deleted", name: "Deleted trip", deleted_at: "today" },
 ] as Trip[];
 const albums = [
-  { id: "free", trip_id: null, location: "Bogor" },
-  { id: "linked", trip_id: "bandung" },
-  { id: "hidden", trip_id: "deleted" },
-  { id: "trash", trip_id: null, deleted_at: "today" },
+  { id: "free", title: "Sayang Fadla", trip_id: null, location: "Bogor" },
+  { id: "linked", title: "Kopi Sore", trip_id: "bandung" },
+  { id: "hidden", title: "Sayang", trip_id: "deleted" },
+  { id: "trash", title: "Sayang Fadla", trip_id: null, deleted_at: "today" },
 ] as Memory[];
 describe("Independent albums and locations", () => {
   it("includes standalone albums without requiring a trip", () => {
@@ -19,12 +19,20 @@ describe("Independent albums and locations", () => {
     ]);
     expect(visibleMemories(albums, []).map((m) => m.id)).toEqual(["free"]);
   });
-  it("filters standalone and trip albums without mixing them", () => {
-    expect(
-      visibleMemories(albums, trips, "standalone").map((m) => m.id),
-    ).toEqual(["free"]);
-    expect(visibleMemories(albums, trips, "bandung").map((m) => m.id)).toEqual([
+  it("searches manually entered titles without exposing deleted albums", () => {
+    expect(visibleMemories(albums, trips, "  FADLA ").map((m) => m.id)).toEqual(
+      ["free"],
+    );
+    expect(visibleMemories(albums, trips, "kopi").map((m) => m.id)).toEqual([
       "linked",
+    ]);
+    expect(visibleMemories(albums, trips, "Bandung")).toEqual([]);
+    const renamed = albums.map((m) =>
+      m.id === "free" ? { ...m, title: "Cerita Baru" } : m,
+    );
+    expect(visibleMemories(renamed, trips, "Fadla")).toEqual([]);
+    expect(visibleMemories(renamed, trips, "cerita").map((m) => m.id)).toEqual([
+      "free",
     ]);
   });
   it("uses custom location before trip label and handles legacy albums", () => {

@@ -1238,15 +1238,15 @@ function Memories({
   onDelete: (m: Memory) => void;
   action: (fn: () => Promise<unknown>) => Promise<boolean>;
 }) {
-  const [trip, setTrip] = useState(""),
+  const [query, setQuery] = useState(""),
     [selected, setSelected] = useState<Memory | null>(null),
     [preview, setPreview] = useState<Photo | null>(null),
     [removePhoto, setRemovePhoto] = useState<Photo | null>(null),
     [caption, setCaption] = useState<Photo | null>(null);
   const ts = store.data.trips.filter((t) => !t.deleted_at),
-    ms = visibleMemories(store.data.memories, ts, trip);
+    ms = visibleMemories(store.data.memories, ts, query);
   const album = selected
-    ? store.data.memories.find((m) => m.id === selected.id)
+    ? store.data.memories.find((m) => m.id === selected.id && !m.deleted_at)
     : null;
   const getTrip = (m: Memory) => ts.find((t) => t.id === m.trip_id);
   const downloadPhoto = async (p: Photo) => {
@@ -1267,31 +1267,35 @@ function Memories({
       >
         <button
           disabled={disabled}
-          onClick={() => onEdit(ts.find((t) => t.id === trip))}
+          onClick={() => {
+            setQuery("");
+            onEdit();
+          }}
         >
           <Plus size={16} /> Kenangan baru
         </button>
       </Heading>
       <div className="sort-row">
         <span>{ms.length} cerita kecil</span>
-        <select
-          aria-label="Filter album perjalanan"
-          value={trip}
-          onChange={(e) => setTrip(e.target.value)}
-        >
-          <option value="">Semua album</option>
-          <option value="standalone">Tanpa perjalanan · album bebas</option>
-          {ts.map((t) => (
-            <option value={t.id} key={t.id}>
-              {t.name}
-            </option>
-          ))}
-        </select>
+        <input
+          type="search"
+          aria-label="Cari judul album"
+          placeholder="Cari judul album?"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          style={{ width: "min(100%, 280px)" }}
+        />
       </div>
       {!ms.length ? (
         <Empty
-          title="Our memories start here."
-          text="Tulis cerita dari tempat yang dikunjungi, atau simpan momen spontan selama perjalanan."
+          title={
+            query.trim() ? "Album tidak ditemukan" : "Our memories start here."
+          }
+          text={
+            query.trim()
+              ? "Coba judul lain atau kosongkan pencarian untuk melihat semua album."
+              : "Tulis cerita dari tempat yang dikunjungi, atau simpan momen spontan selama perjalanan."
+          }
         />
       ) : (
         <div className="album-grid">
