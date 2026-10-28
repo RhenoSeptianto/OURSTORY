@@ -27,6 +27,7 @@ beforeAll(async () => {
     "001_schema.sql",
     "002_album_locations.sql",
     "003_dashboard_polaroids.sql",
+    "004_special_days.sql",
   ])
     await pg.exec(
       await readFile(
@@ -45,6 +46,67 @@ afterAll(async () => {
   await pg.close();
 });
 describe("Approved Polaroid migration and RLS in local PostgreSQL", () => {
+  it("shares special dates between members, guards conflicts and blocks unauthorized writes", async () => {
+    await actor(rheno);
+    const created = await pg.query<{ id: string; version: number }>(
+      "insert into public.special_days(title,kind,date) values('Our anniversary','anniversary','2022-10-28') returning id,version",
+    );
+    const row = created.rows[0];
+    await actor(fadla);
+    expect(
+      (
+        await pg.query("select * from public.special_days where id=$1", [
+          row.id,
+        ])
+      ).rows,
+    ).toHaveLength(1);
+    await pg.query(
+      "update public.special_days set title='Together' where id=$1 and version=$2",
+      [row.id, row.version],
+    );
+    expect(
+      (
+        await pg.query(
+          "update public.special_days set title='Stale' where id=$1 and version=$2 returning id",
+          [row.id, row.version],
+        )
+      ).rows,
+    ).toHaveLength(0);
+    await expect(
+      pg.exec("update public.special_days set version=99"),
+    ).rejects.toMatchObject({ code: "42501" });
+    await expect(
+      pg.exec(
+        "insert into public.special_days(title,kind,date) values('','bad','2026-01-01')",
+      ),
+    ).rejects.toMatchObject({ code: "23514" });
+    await actor(outsider);
+    expect(
+      (await pg.query("select * from public.special_days")).rows,
+    ).toHaveLength(0);
+    await expect(
+      pg.exec(
+        "insert into public.special_days(title,kind,date) values('No','special','2026-01-01')",
+      ),
+    ).rejects.toMatchObject({ code: "42501" });
+    await actor("", "anon");
+    await expect(
+      pg.query("select * from public.special_days"),
+    ).rejects.toMatchObject({ code: "42501" });
+    await actor(rheno);
+    await pg.query(
+      "update public.special_days set deleted_at=now() where id=$1",
+      [row.id],
+    );
+    expect(
+      (
+        await pg.query<{ deleted_at: string }>(
+          "select deleted_at from public.special_days where id=$1",
+          [row.id],
+        )
+      ).rows[0].deleted_at,
+    ).toBeTruthy();
+  });
   it("allows both members to share one versioned configuration and rejects a stale save", async () => {
     await actor(rheno);
     const first = await pg.query<{ version: number }>(

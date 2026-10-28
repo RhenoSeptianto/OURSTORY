@@ -1,0 +1,83 @@
+.reminders {
+  margin: 24px 0;
+  padding: 24px;
+  border: 1px solid #e4d6d0;
+  border-radius: 16px;
+  background: #fffcf9;
+}
+.reminders > p,
+.reminder-copy p {
+  font-size: 13px;
+  line-height: 1.7;
+}
+.reminder-list {
+  display: grid;
+  gap: 12px;
+  margin-top: 18px;
+}
+.reminder-list article {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 0;
+  border-top: 1px solid #e4d6d0;
+}
+.reminder-copy {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.reminder-copy h3,
+.reminder-copy p {
+  margin: 0 0 6px;
+}
+.reminder-copy strong {
+  font-size: 13px;
+}
+.reminder-actions,
+.reminder-calendar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.reminder-actions button {
+  min-height: 44px;
+}
+.reminder-form {
+  display: grid;
+  gap: 18px;
+}
+.reminder-form label {
+  display: grid;
+  gap: 8px;
+}
+.reminder-form input,
+.reminder-form select {
+  width: 100%;
+  min-width: 0;
+}
+.reminder-form p {
+  font-size: 13px;
+  line-height: 1.7;
+}
+@media (max-width: 650px) {
+  .reminders {
+    padding: 18px;
+  }
+  .reminders .section-heading {
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .reminder-list article {
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+  .reminder-copy {
+    flex-basis: calc(100% - 40px);
+  }
+  .reminder-actions {
+    width: 100%;
+  }
+}

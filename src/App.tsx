@@ -47,6 +47,7 @@ import { DestinationForm, MemoryForm, TripForm } from "./forms";
 import { visibleMemories, memoryLocation } from "./memories";
 import { imageExtension } from "./images";
 import { PolaroidGallery } from "./polaroids/PolaroidGallery";
+import { Reminders } from "./reminders/Reminders";
 
 type Store = ReturnType<typeof useStories>;
 type EditState =
@@ -676,6 +677,11 @@ function Dashboard({
           <span className="hand-heart">♡</span>
         </div>
       </section>
+      <Reminders
+        trips={store.data.trips}
+        memberId={store.member!.id}
+        online={store.online}
+      />
       <div className="stat-grid">
         <div>
           <span className="stat-icon sage">
