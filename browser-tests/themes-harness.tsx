@@ -1,13 +1,20 @@
 import { useState } from "react";
 import { createRoot } from "react-dom/client";
 import { ThemePicker } from "../src/ThemePicker";
-import { applyTheme, readTheme } from "../src/themes";
+import {
+  applyTheme,
+  readTheme,
+  applyBannerStyle,
+  readBannerStyle,
+} from "../src/themes";
+import { BannerBackdrop } from "../src/BannerBackdrop";
 import { Modal } from "../src/components";
 import "../src/style.css";
 import "../src/polaroids/polaroids.css";
 import "../src/reminders/reminders.css";
 import "../src/themes.css";
 applyTheme(readTheme());
+applyBannerStyle(readBannerStyle());
 function Preview() {
   const [modal, setModal] = useState(false);
   return (
@@ -40,6 +47,7 @@ function Preview() {
             ♡ Anniversary kita · 5 hari lagi
           </a>
           <section className="dashboard-hero" id="preview">
+            <BannerBackdrop />
             <div className="hero-copy">
               <span className="eyebrow">OUR TRAVEL DIARY</span>
               <h2>

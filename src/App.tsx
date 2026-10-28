@@ -49,6 +49,7 @@ import { imageExtension } from "./images";
 import { PolaroidGallery } from "./polaroids/PolaroidGallery";
 import { Reminders } from "./reminders/Reminders";
 import { ThemePicker } from "./ThemePicker";
+import { BannerBackdrop } from "./BannerBackdrop";
 
 type Store = ReturnType<typeof useStories>;
 type EditState =
@@ -643,6 +644,7 @@ function Dashboard({
         online={store.online}
       />
       <section className="dashboard-hero">
+        <BannerBackdrop />
         <div className="hero-copy">
           <span className="eyebrow">RHENO & FADLA · OUR TRAVEL DIARY</span>
           <h2>

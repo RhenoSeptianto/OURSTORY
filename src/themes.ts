@@ -50,6 +50,22 @@ export const themes = [
   },
 ] as const;
 export type ThemeId = (typeof themes)[number]["id"];
+export type BannerStyle = "theme" | "plain";
+export function readBannerStyle(): BannerStyle {
+  try {
+    return localStorage.getItem("ots-banner") === "plain" ? "plain" : "theme";
+  } catch {
+    return "theme";
+  }
+}
+export function applyBannerStyle(style: BannerStyle) {
+  document.documentElement.dataset.banner = style;
+  try {
+    localStorage.setItem("ots-banner", style);
+  } catch {
+    /* Keep the preview usable without browser storage. */
+  }
+}
 export function readTheme(): ThemeId {
   try {
     const saved = localStorage.getItem("ots-theme");

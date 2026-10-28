@@ -11,6 +11,24 @@ test("seven themes remain readable, preserve photos and persist after reload", a
   for (const theme of themes) {
     await page.getByRole("button", { name: new RegExp(theme.name) }).click();
     await expect(page.locator("html")).toHaveAttribute("data-theme", theme.id);
+    await expect(page.locator(`.scene-${theme.id}`)).toBeVisible();
+    expect(
+      await page
+        .locator(".banner-scene")
+        .evaluateAll(
+          (nodes) =>
+            nodes.filter((n) => getComputedStyle(n).display !== "none").length,
+        ),
+    ).toBe(1);
+    await expect(page.locator(".banner-backdrop")).toHaveAttribute(
+      "aria-hidden",
+      "true",
+    );
+    expect(
+      await page
+        .locator(".banner-backdrop")
+        .evaluate((el) => getComputedStyle(el).pointerEvents),
+    ).toBe("none");
     await expect(
       page.getByRole("button", { name: new RegExp(theme.name) }),
     ).toHaveAttribute("aria-pressed", "true");
@@ -66,6 +84,34 @@ test("seven themes remain readable, preserve photos and persist after reload", a
       theme.colors[0],
     );
   }
+});
+
+test("plain banner preference persists and does not reset when the theme changes", async ({
+  page,
+}) => {
+  await page.goto("browser-tests/themes.html");
+  const preference = page.getByRole("combobox", {
+    name: "Background banner",
+    exact: true,
+  });
+  await expect(page.locator(".banner-backdrop")).toBeVisible();
+  await preference.selectOption("plain");
+  await expect(page.locator(".banner-backdrop")).toBeHidden();
+  await page.getByRole("button", { name: /Plum Love/ }).click();
+  await expect(page.locator(".banner-backdrop")).toBeHidden();
+  await page.reload();
+  await expect(preference).toHaveValue("plain");
+  await expect(page.locator(".banner-backdrop")).toBeHidden();
+  await preference.selectOption("theme");
+  await expect(page.locator(".scene-plum")).toBeVisible();
+  await page
+    .getByRole("button", { name: "Jelajahi perjalanan kita", exact: true })
+    .click();
+  await expect(page.getByRole("dialog")).toBeVisible();
+  await page.getByRole("button", { name: "Selesai", exact: true }).click();
+  await page.reload();
+  await expect(preference).toHaveValue("theme");
+  await expect(page.locator(".scene-plum")).toBeVisible();
 });
 test("legacy sage selection works and unavailable storage does not break theme selection", async ({
   page,

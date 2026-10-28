@@ -1,0 +1,79 @@
+.dashboard-hero {
+  isolation: isolate;
+}
+.banner-backdrop {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+  border-radius: inherit;
+}
+.banner-backdrop svg {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 68%;
+  height: 100%;
+  color: var(--accent, #8d5263);
+}
+.banner-scene {
+  display: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.36;
+}
+:root[data-theme="cream"] .scene-cream,
+:root[data-theme="sage"] .scene-sage,
+:root[data-theme="blush"] .scene-blush,
+:root[data-theme="midnight"] .scene-midnight,
+:root[data-theme="plum"] .scene-plum,
+:root[data-theme="moonlight"] .scene-moonlight,
+:root[data-theme="black"] .scene-black {
+  display: inline;
+}
+.scene-route {
+  stroke-dasharray: 3 8;
+  opacity: 0.6;
+}
+.scene-moon,
+.scene-cloud,
+.scene-hill {
+  fill: var(--accent, #8d5263);
+  fill-opacity: 0.12;
+}
+.scene-stars,
+.scene-fireflies {
+  fill: currentColor;
+  stroke: none;
+}
+.scene-constellation {
+  stroke-dasharray: 2 5;
+}
+:root:not([data-banner="plain"]) .dashboard-hero .hero-art {
+  z-index: 1;
+  background: none;
+}
+:root[data-banner="plain"] .banner-backdrop {
+  display: none;
+}
+.banner-preference {
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+}
+.banner-preference p {
+  font-size: 12px;
+  margin: 8px 0 0;
+}
+@media (max-width: 650px) {
+  .banner-backdrop svg {
+    width: 65%;
+  }
+  .banner-scene {
+    opacity: 0.28;
+  }
+}
