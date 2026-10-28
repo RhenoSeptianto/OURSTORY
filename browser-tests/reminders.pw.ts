@@ -1,5 +1,76 @@
 import { test, expect } from "@playwright/test";
 import type { SpecialDay } from "../src/reminders/model";
+
+test("dashboard only shows a small reminder from H-7 through day H and links to settings", async ({
+  page,
+}) => {
+  await page.route(
+    "https://example.supabase.co/rest/v1/special_days*",
+    (route) =>
+      route.fulfill({
+        status: 200,
+        contentType: "application/json",
+        headers: { "access-control-allow-origin": "*" },
+        body: "[]",
+      }),
+  );
+  for (const days of [7, 0, 8, -1]) {
+    await page.goto(`browser-tests/reminders.html?compact&days=${days}`);
+    if (days === 7 || days === 0) {
+      const banner = page.getByRole("link", { name: /Bogor weekend/ });
+      await expect(banner).toBeVisible();
+      await expect(banner).toHaveAttribute("href", "#/settings");
+      await expect(banner).toContainText(
+        days === 0 ? "Hari ini" : "7 hari lagi",
+      );
+      expect((await banner.boundingBox())!.height).toBeLessThanOrEqual(48);
+    } else await expect(page.locator(".reminder-banner")).toHaveCount(0);
+    await expect(
+      page.getByRole("button", { name: "Hari spesial", exact: true }),
+    ).toHaveCount(0);
+    expect(
+      await page.evaluate(
+        () => document.documentElement.scrollWidth <= innerWidth,
+      ),
+    ).toBe(true);
+  }
+});
+
+test("compact reminder picks the nearest annual date and counts other nearby events", async ({
+  page,
+}) => {
+  const now = new Date();
+  const today = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Asia/Jakarta",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).format(now);
+  await page.route(
+    "https://example.supabase.co/rest/v1/special_days*",
+    (route) =>
+      route.fulfill({
+        status: 200,
+        contentType: "application/json",
+        headers: { "access-control-allow-origin": "*" },
+        body: JSON.stringify([
+          {
+            id: "special",
+            title: "Ulang tahun Fadla",
+            kind: "special",
+            date: today,
+            version: 1,
+            created_by: null,
+            updated_by: null,
+          },
+        ]),
+      }),
+  );
+  await page.goto("browser-tests/reminders.html?compact");
+  const banner = page.getByRole("link", { name: /Ulang tahun Fadla/ });
+  await expect(banner).toContainText("Hari ini");
+  await expect(banner).toContainText("+1");
+});
 test("special-day create, edit, export and delete; responsive dashboard", async ({
   page,
 }) => {
@@ -49,7 +120,9 @@ test("special-day create, edit, export and delete; responsive dashboard", async 
   await page.goto("browser-tests/reminders.html");
   await page.getByRole("button", { name: "Hari spesial", exact: true }).click();
   await page.getByLabel("Judul", { exact: true }).fill("Anniversary kita");
-  await page.getByRole("combobox", { name: "Jenis", exact: true }).selectOption("anniversary");
+  await page
+    .getByRole("combobox", { name: "Jenis", exact: true })
+    .selectOption("anniversary");
   await page.getByLabel("Tanggal mulai hubungan").fill("2022-10-28");
   await page.getByRole("button", { name: "Simpan hari spesial" }).click();
   const item = page

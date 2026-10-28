@@ -1,3 +1,37 @@
+.reminder-banner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  max-width: 100%;
+  min-height: 44px;
+  margin: -8px 0 14px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: #f3e8e5;
+  color: #60474b;
+  font-size: 12px;
+  text-decoration: none;
+}
+.reminder-banner:focus-visible {
+  outline: 2px solid #8e5c6a;
+  outline-offset: 3px;
+}
+.reminder-banner-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+.reminder-banner-time,
+.reminder-banner small {
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.reminder-banner-time::before {
+  content: "·";
+  margin-right: 8px;
+}
 .reminders {
   margin: 24px 0;
   padding: 24px;

@@ -1,6 +1,6 @@
 # Pengingat Ourstory
 
-Dashboard includes **Sebentar lagi ♡**. Both authorized members share special dates and anniversary records; trips are derived from existing trip dates (no duplicate reminder records). Archived/deleted/completed trips and deleted special dates are excluded. Annual dates roll forward, with anniversary age calculated from the original relationship date. February 29 is observed on the last day of February in both the dashboard and exported calendars.
+**Pengaturan → Tanggal penting** holds special dates, anniversary records, editing and calendar exports for both authorized members. Trips are derived from existing trip dates (no duplicate reminder records). The dashboard shows only a small link above the hero for the nearest date from H-7 through day H, with a count of other nearby events. Clicking it opens Settings. No nearby dates means no dashboard reminder; ongoing trips past departure day are excluded from this banner. Archived/deleted/completed trips and deleted special dates are excluded. Annual dates roll forward, with anniversary age calculated from the original relationship date. February 29 is observed on the last day of February in both the dashboard and exported calendars. This layout change requires no new SQL migration.
 
 ## Activate the database
 

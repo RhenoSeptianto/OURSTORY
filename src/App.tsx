@@ -635,6 +635,12 @@ function Dashboard({
           <Plus size={17} /> Rencanakan perjalanan
         </button>
       </Heading>
+      <Reminders
+        compact
+        trips={store.data.trips}
+        memberId={store.member!.id}
+        online={store.online}
+      />
       <section className="dashboard-hero">
         <div className="hero-copy">
           <span className="eyebrow">RHENO & FADLA · OUR TRAVEL DIARY</span>
@@ -677,11 +683,6 @@ function Dashboard({
           <span className="hand-heart">♡</span>
         </div>
       </section>
-      <Reminders
-        trips={store.data.trips}
-        memberId={store.member!.id}
-        online={store.online}
-      />
       <div className="stat-grid">
         <div>
           <span className="stat-icon sage">
@@ -1563,6 +1564,11 @@ function Preferences({
         eyebrow="OUR PRIVATE LITTLE SPACE"
         title="Pengaturan"
         text="Semua yang membuat ruang ini milik kita."
+      />
+      <Reminders
+        trips={store.data.trips}
+        memberId={store.member!.id}
+        online={store.online}
       />
       <div className="settings-grid">
         <section className="panel">

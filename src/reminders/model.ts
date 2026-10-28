@@ -16,6 +16,7 @@ export interface CalendarEvent {
   anniversary: number | null;
   version: number;
   source?: SpecialDay;
+  started?: boolean;
 }
 const dayMs = 86400000;
 function stamp(date: string) {
@@ -72,6 +73,7 @@ export function upcoming(
           Math.round((stamp(t.start_date) - stamp(tripToday)) / dayMs),
         ),
         annual: false,
+        started: t.start_date < tripToday,
         anniversary: null,
         version: t.version,
       });

@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { CalendarDays, Edit3, Plus, Trash2 } from "lucide-react";
+import { Link } from "react-router-dom";
 import { Modal } from "../components";
 import { db, download, fmt, localDate, save } from "../lib";
 import type { Trip } from "../lib";
@@ -11,10 +12,12 @@ export function Reminders({
   trips,
   memberId,
   online,
+  compact = false,
 }: {
   trips: Trip[];
   memberId: string;
   online: boolean;
+  compact?: boolean;
 }) {
   const [rows, setRows] = useState<SpecialDay[]>([]);
   const [error, setError] = useState("");
@@ -69,7 +72,7 @@ export function Reminders({
     window.addEventListener("focus", refresh);
     window.addEventListener("online", refresh);
     const channel = db
-      ?.channel("special-days")
+      ?.channel(compact ? "special-days-banner" : "special-days-settings")
       .on(
         "postgres_changes",
         { event: "*", schema: "public", table: "special_days" },
@@ -83,8 +86,27 @@ export function Reminders({
       window.removeEventListener("online", refresh);
       if (channel) void db!.removeChannel(channel);
     };
-  }, [memberId, refresh]);
+  }, [memberId, refresh, compact]);
   const events = upcoming(rows, trips);
+  if (compact) {
+    const nearby = events.filter((event) => event.days <= 7 && !event.started);
+    const next = nearby[0];
+    if (!next) return null;
+    return (
+      <Link
+        className="reminder-banner"
+        to="/settings"
+        aria-label={`${next.title} · ${next.days === 0 ? "Hari ini" : `${next.days} hari lagi`}. Lihat tanggal penting di Pengaturan`}
+      >
+        <span aria-hidden="true">♡</span>
+        <span className="reminder-banner-title">{next.title}</span>
+        <span className="reminder-banner-time">
+          {next.days === 0 ? "Hari ini" : `${next.days} hari lagi`}
+        </span>
+        {nearby.length > 1 && <small>+{nearby.length - 1}</small>}
+      </Link>
+    );
+  }
   const commit = async (fn: () => Promise<unknown>) => {
     setBusy(true);
     setError("");
@@ -104,11 +126,15 @@ export function Reminders({
     }
   };
   return (
-    <section className="reminders" aria-label="Pengingat kita">
+    <section
+      className="reminders"
+      aria-label="Tanggal penting"
+      id="tanggal-penting"
+    >
       <div className="section-heading">
         <div>
           <span className="eyebrow">DATES TO REMEMBER</span>
-          <h2>Sebentar lagi ♡</h2>
+          <h2>Tanggal penting</h2>
         </div>
         <button
           className="secondary"
@@ -119,6 +145,7 @@ export function Reminders({
         </button>
       </div>
       <p>
+        Simpan ulang tahun Rheno, ulang tahun Fadla, dan tanggal mulai hubungan.
         Hari spesial dan anniversary berulang setiap tahun. Rencana perjalanan
         mengikuti tanggal keberangkatan.
       </p>
