@@ -4,6 +4,9 @@ import { HashRouter } from "react-router-dom";
 import { registerSW } from "virtual:pwa-register";
 import App from "./App";
 import "./style.css";
+import "./themes.css";
+import { applyTheme, readTheme } from "./themes";
+applyTheme(readTheme());
 const update = registerSW({
   onNeedRefresh() {
     if (confirm("Versi baru tersedia. Muat ulang aplikasi?")) void update(true);

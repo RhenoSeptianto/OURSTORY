@@ -1,0 +1,9 @@
+# Appearance themes
+
+Settings includes seven theme cards: Warm Paper (`cream`, existing default), Sage Romance (`sage`, existing saved value preserved), Blush Diary, Midnight Rose, Plum Love, Moonlight Sage and Black Valentine.
+
+Theme selection is per browser/device in `ots-theme`; no personal data, database migration, shared setting or user email detection is involved. The default stays Warm Paper unless the user chooses another theme. `src/themes.ts` validates stored values, applies the theme before React renders, sets native `color-scheme` and the browser `theme-color`, and tolerates blocked storage. Choosing a theme previews it immediately. No reload or server write is required; persistence requires browser storage to be available.
+
+`src/themes.css` defines shared semantic colors and theme palettes. Existing page, reminder and Polaroid styles consume semantic colors with original-color fallbacks. Native inputs, menus, cards, status text, navigation, modal surfaces, album frames and login follow the selected theme. Source photographs have no filter or opacity adjustment and remain unmodified. Theme picker previews deliberately keep each theme's own colors when another theme is active.
+
+Browser tests cover seven choices, saved-theme reload, old Sage preference, blocked storage, text/input/button contrast (at least 4.5:1 on measured representative surfaces), photo filter/opacity, no horizontal overflow, and opening/closing a dialog in WebKit mobile and Chrome. Representative synthetic UI screenshots are generated under ignored `test-results/`; they contain no personal photos. Contrast is sampled with reduced-motion enabled to measure settled colors rather than intermediate transition frames. Physical iPhone Safari and native date/calendar popups are not directly tested on this Windows host.

@@ -48,6 +48,7 @@ import { visibleMemories, memoryLocation } from "./memories";
 import { imageExtension } from "./images";
 import { PolaroidGallery } from "./polaroids/PolaroidGallery";
 import { Reminders } from "./reminders/Reminders";
+import { ThemePicker } from "./ThemePicker";
 
 type Store = ReturnType<typeof useStories>;
 type EditState =
@@ -1515,14 +1516,7 @@ function Preferences({
   disabled: boolean;
   mutate: Mutate;
 }) {
-  const [theme, setTheme] = useState(
-      localStorage.getItem("ots-theme") || "cream",
-    ),
-    [loggingOut, setLoggingOut] = useState(false);
-  useEffect(() => {
-    document.documentElement.dataset.theme = theme;
-    localStorage.setItem("ots-theme", theme);
-  }, [theme]);
+  const [loggingOut, setLoggingOut] = useState(false);
   const d = store.data,
     photosBytes = d.photos.reduce((n, p) => n + p.bytes, 0);
   const deleted = [
@@ -1584,14 +1578,7 @@ function Preferences({
               </small>
             </div>
           </div>
-          <h3>Tampilan</h3>
-          <label>
-            Tema aplikasi
-            <select value={theme} onChange={(e) => setTheme(e.target.value)}>
-              <option value="cream">Warm cream</option>
-              <option value="sage">Soft sage</option>
-            </select>
-          </label>
+          <ThemePicker />
           <button
             className="secondary"
             disabled={loggingOut}

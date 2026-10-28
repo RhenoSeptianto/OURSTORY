@@ -1,0 +1,284 @@
+/* Semantic colors are consumed by the existing scrapbook styles. Photos are never filtered. */
+:root {
+  --canvas: #faf8f5;
+  --hero: #efe1da;
+  --button: #60474b;
+  --on-button: #ffffff;
+  --button-hover: #795b60;
+}
+:root[data-theme="sage"] {
+  --canvas: #f4f6f0;
+  --surface: #fcfdf8;
+  --soft: #e6ede1;
+  --tint: #d4e1ce;
+  --ink: #354c3e;
+  --muted: #586c5c;
+  --accent: #486151;
+  --line: #ced9c8;
+  --hero: #dfe8da;
+  --glow: #f4f5e6;
+  --button: #486151;
+  --button-hover: #3c5344;
+  --sage: #78957c;
+}
+:root[data-theme="blush"] {
+  --canvas: #fcf4f5;
+  --surface: #fffafb;
+  --soft: #f5e5ea;
+  --tint: #e9cbd6;
+  --ink: #623b4b;
+  --muted: #80596a;
+  --accent: #8c435e;
+  --line: #e4cad4;
+  --hero: #f2dfe5;
+  --glow: #fff7ee;
+  --button: #8c435e;
+  --button-hover: #75354e;
+}
+:root[data-appearance="dark"] {
+  --ink: #f4e9e8;
+  --muted: #cdb8bf;
+  --line: #614550;
+  --on-button: #291c23;
+  --error-ink: #ffb8bd;
+  --paper: var(--surface);
+  --sage: #adc8b3;
+}
+:root[data-theme="midnight"] {
+  --canvas: #21191c;
+  --surface: #2c2227;
+  --soft: #392b31;
+  --tint: #61434e;
+  --hero: #392830;
+  --glow: #4a343d;
+  --accent: #e8b0bf;
+  --button: #e8b0bf;
+  --button-hover: #f2c6d1;
+}
+:root[data-theme="plum"] {
+  --canvas: #241c2d;
+  --surface: #30253b;
+  --soft: #40304b;
+  --tint: #665078;
+  --hero: #3b2b46;
+  --glow: #513753;
+  --accent: #efb4d3;
+  --muted: #d2bdd8;
+  --line: #64516e;
+  --button: #efb4d3;
+  --button-hover: #f6cde2;
+}
+:root[data-theme="moonlight"] {
+  --canvas: #182421;
+  --surface: #21312b;
+  --soft: #2c4037;
+  --tint: #496554;
+  --hero: #293d35;
+  --glow: #3c5345;
+  --ink: #eef2e9;
+  --muted: #bdcfc2;
+  --accent: #b4d6bd;
+  --line: #4d6759;
+  --button: #b4d6bd;
+  --button-hover: #cce6d3;
+}
+:root[data-theme="black"] {
+  --canvas: #101013;
+  --surface: #1b191e;
+  --soft: #29242c;
+  --tint: #53404e;
+  --hero: #252029;
+  --glow: #392735;
+  --ink: #f6edf1;
+  --muted: #cabdc7;
+  --line: #584650;
+  --accent: #f0abc7;
+  --button: #f0abc7;
+  --button-hover: #f6cadc;
+}
+html {
+  background: var(--canvas);
+}
+body {
+  background: var(--canvas);
+}
+.dashboard-hero,
+.welcome-art {
+  background-color: var(--hero);
+}
+button,
+.button {
+  background-color: var(--button);
+  color: var(--on-button);
+}
+button:hover,
+.button:hover {
+  background-color: var(--button-hover);
+}
+.secondary,
+.icon-button,
+.text-button,
+.tabs button,
+.polaroid-dots button {
+  background-color: transparent;
+  color: var(--ink, #60474b);
+}
+.secondary:hover,
+.icon-button:hover,
+.tabs button:hover {
+  background-color: var(--soft, #f0e7e2);
+}
+.text-button:hover,
+.polaroid-dots button:hover {
+  background: transparent;
+}
+.light,
+.google-button {
+  background: var(--surface, #fff9f4);
+  color: var(--ink, #60474b);
+}
+.light:hover,
+.google-button:hover {
+  background: var(--soft, #fffdfb);
+}
+.tabs button.active {
+  background: var(--button);
+  color: var(--on-button);
+  border-color: var(--button);
+}
+.danger {
+  background: #963e50;
+  color: #ffffff;
+}
+.danger:hover {
+  background: #7e3040;
+}
+:root[data-theme] .topbar {
+  background: var(--surface, #fffcf9b8);
+}
+:root[data-appearance="dark"] .sidebar {
+  background: var(--surface);
+}
+:root[data-appearance="dark"] .welcome-content {
+  background: var(--canvas);
+}
+:root[data-appearance="dark"] .modal-backdrop {
+  background: #08060bbf;
+}
+:root[data-appearance="dark"] .error {
+  color: var(--error-ink) !important;
+}
+:root[data-appearance="dark"] .pill {
+  background: var(--surface);
+  color: var(--ink);
+}
+:root[data-appearance="dark"] .success {
+  background: #284b39;
+  color: #d5f0dd;
+  border-color: #4e765d;
+}
+:root[data-appearance="dark"] .polaroid-arrow,
+:root[data-appearance="dark"] .polaroid-edit {
+  background: var(--surface);
+  color: var(--accent);
+}
+:root[data-appearance="dark"] .polaroid-dots [aria-current="true"] span {
+  background: var(--accent);
+}
+:root[data-appearance="dark"] .hero-copy h2 em,
+:root[data-appearance="dark"] .hand-heart {
+  color: var(--accent);
+}
+:root[data-appearance="dark"] .polaroid-picker-grid button {
+  color: #ffffff;
+}
+:root[data-appearance="dark"] .polaroid-pick > span {
+  background: var(--surface);
+  color: var(--ink);
+}
+.image-placeholder {
+  background: linear-gradient(
+    155deg,
+    #d7ddd0,
+    #a4b9a1 48%,
+    #7c9a8c 49%,
+    #b2bb9d 67%,
+    #d8d2b9
+  );
+}
+:root[data-theme] :is(button, a):focus-visible {
+  outline-color: var(--accent, #8d5263);
+}
+:root[data-theme] :is(input, select, textarea):focus {
+  border-color: var(--accent, #8d5263);
+  box-shadow: 0 0 0 3px var(--soft, #f0dfdb);
+}
+.theme-picker {
+  margin: 24px 0;
+}
+.theme-picker > p {
+  font-size: 12px;
+  line-height: 1.7;
+}
+.theme-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+.theme-choice {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  text-align: left;
+  padding: 10px;
+  gap: 7px;
+  min-width: 0;
+  background: var(--surface, #fffcf9);
+  color: var(--ink, #60474b);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+.theme-choice:hover {
+  background: var(--soft, #f4eae5);
+}
+.theme-choice[aria-pressed="true"] {
+  border: 2px solid var(--accent, #8d5263);
+  padding: 9px;
+}
+.theme-choice strong {
+  font-size: 12px;
+}
+.theme-choice small {
+  font-size: 11px;
+  color: var(--muted, #78676a);
+  font-weight: 400;
+}
+.theme-swatch {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+  min-height: 58px;
+  border-radius: 8px;
+  padding: 10px;
+}
+.theme-swatch > span:first-child {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+}
+.theme-swatch-heart {
+  font-family: Georgia, serif;
+  font-size: 25px;
+}
+.theme-selection {
+  margin: 12px 0 0;
+}
+@media (max-width: 360px) {
+  .theme-options {
+    grid-template-columns: 1fr;
+  }
+}

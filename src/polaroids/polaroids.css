@@ -13,7 +13,7 @@
   height: 245px;
   position: relative;
   overflow: hidden;
-  background: #eee9e0;
+  background: var(--soft, #eee9e0);
   touch-action: pan-y pinch-zoom;
 }
 .polaroid-layer {
@@ -83,7 +83,7 @@
   height: 5px;
   border-radius: 50%;
   display: block;
-  background: #d8c7c1;
+  background: var(--tint, #d8c7c1);
 }
 .polaroid-dots [aria-current="true"] span {
   background: #8d5263;
@@ -98,7 +98,7 @@
   height: 40px;
   padding: 0;
   background: #fffcf5e8;
-  color: #60474b;
+  color: var(--ink, #60474b);
   border: 0;
   border-radius: 6px;
   opacity: 0;
@@ -122,21 +122,21 @@
   height: 44px;
   padding: 0;
   border-radius: 50%;
-  background: #fffaf4;
-  color: #795362;
-  border: 1px solid #d7c1b6;
+  background: var(--surface, #fffaf4);
+  color: var(--accent, #795362);
+  border: 1px solid var(--line, #d7c1b6);
   box-shadow: 0 3px 10px #60474b19;
   transform: rotate(-7deg);
 }
 .polaroid-edit:hover {
-  background: #f3e7de;
+  background: var(--soft, #f3e7de);
 }
 .polaroid-feedback {
   position: absolute;
   left: -5px;
   right: -5px;
   bottom: -38px;
-  background: #fffaf4;
+  background: var(--surface, #fffaf4);
   border-radius: 7px;
   display: flex;
   align-items: center;
@@ -193,15 +193,15 @@
   padding: 13px;
   border: 1px solid var(--line);
   border-radius: 9px;
-  background: #fffaf5;
+  background: var(--surface, #fffaf5);
 }
 .polaroid-thumb {
   width: 70px;
   height: 83px;
   flex-shrink: 0;
-  border: 4px solid #fffdf8;
+  border: 4px solid var(--line, #fffdf8);
   box-shadow: 0 2px 8px #60474b12;
-  background: #eee9e0;
+  background: var(--soft, #eee9e0);
 }
 .polaroid-thumb > span {
   font-size: 9px;
@@ -247,8 +247,8 @@
 }
 .polaroid-empty {
   text-align: center;
-  background: #f6eee7;
-  border: 1px dashed #d7c4b8;
+  background: var(--soft, #f6eee7);
+  border: 1px dashed var(--line, #d7c4b8);
   border-radius: 10px;
   padding: 25px;
 }
@@ -258,8 +258,8 @@
   margin: 12px 0 0;
 }
 .polaroid-picker {
-  background: #f5eee8;
-  border: 1px solid #e3d4ca;
+  background: var(--soft, #f5eee8);
+  border: 1px solid var(--line, #e3d4ca);
   padding: 18px;
   border-radius: 10px;
   margin: 16px 0;
@@ -280,7 +280,7 @@
   position: relative;
   overflow: hidden;
   border-radius: 6px;
-  background: #e9e3da;
+  background: var(--soft, #e9e3da);
   border: 2px solid transparent;
 }
 .polaroid-pick img,
@@ -296,14 +296,14 @@
   right: 4px;
   left: 4px;
   background: #fff9eff0;
-  color: #60474b;
+  color: var(--ink, #60474b);
   padding: 4px;
   font-size: 9px;
   border-radius: 4px;
 }
 .polaroid-pick:disabled {
   opacity: 0.65;
-  border-color: #8ea99a;
+  border-color: var(--line, #8ea99a);
 }
 .polaroid-pick .image-placeholder span {
   font-size: 11px;
@@ -311,7 +311,7 @@
 .polaroid-save-actions {
   position: sticky;
   bottom: -27px;
-  background: #fffcf9;
+  background: var(--surface, #fffcf9);
   border-top: 1px solid var(--line);
   display: flex;
   justify-content: flex-end;
@@ -325,12 +325,12 @@
 }
 .editor-warning {
   display: block;
-  background: #f2eadc;
+  background: var(--soft, #f2eadc);
   border-radius: 7px;
   padding: 12px;
   font-size: 12px;
   line-height: 1.7;
-  color: #765f4f;
+  color: var(--ink, #765f4f);
 }
 .editor-warning .text-button {
   margin: 4px 0 0;
@@ -340,7 +340,7 @@
   padding: 18px;
   border: 1px solid var(--line);
   border-radius: 9px;
-  background: #f5eee8;
+  background: var(--soft, #f5eee8);
 }
 .polaroid-position h3 {
   font-size: 21px;
@@ -354,7 +354,7 @@
   aspect-ratio: 1;
   overflow: hidden;
   margin: 15px auto;
-  background: #e6dfd4;
+  background: var(--soft, #e6dfd4);
   touch-action: none;
   cursor: grab;
 }
